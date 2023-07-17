@@ -1,7 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 
 const Signup = () => {
+    const {createUser}=useContext(AuthContext)
+    const hendalSginup =(event)=>{
+        event.preventDefault() 
+        const form = event.target;
+        const email = form.email.value;
+        const password= form.password.value;
+        createUser(email,password)
+        .then(res=>{
+            const user = res.user;
+            console.log(user)
+        })
+        .catch(err=>console.log(err))
+        console.log(email)
+    }
     return (
         <div className='mt-20'>
             <div className="hero">
@@ -11,7 +26,7 @@ const Signup = () => {
                         
                     </div>
                     <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 mt-10">
-                        <form className="card-body">
+                        <form onSubmit={hendalSginup} className="card-body">
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Email</span>
